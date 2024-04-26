@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bd3cclg82qd0v"]
+
+[ext_resource type="Script" path="res://entities/finish_pole/finish_area.gd" id="1_na0qa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s1quf"]
+radius = 64.0
+
+[node name="FinishArea" type="Area2D"]
+script = ExtResource("1_na0qa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_s1quf")
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2(8, 13)
+color = Color(1, 1, 0, 1)
+polygon = PackedVector2Array(-63, -35, -44, -69, -11, -78, 24, -71, 47, -39, 39, -2, 7, 19, 10, 56, -24, 56, -22, 17, -41, 9, -55, -10)
