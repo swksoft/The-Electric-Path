@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://deov56444v8la"]
+
+[ext_resource type="PackedScene" uid="uid://bynwpxyuxjbqb" path="res://gameplay/gameplay.tscn" id="1_ra5s0"]
+[ext_resource type="PackedScene" uid="uid://b8735bn5u2ixx" path="res://ui/ui.tscn" id="2_ckbfm"]
+[ext_resource type="PackedScene" uid="uid://clla0oaww3cdb" path="res://entities/Player/player.tscn" id="3_fhxem"]
+[ext_resource type="PackedScene" uid="uid://bd3cclg82qd0v" path="res://entities/finish_pole/finish_area.tscn" id="4_iojfa"]
+
+[node name="TestScene01" type="Node2D"]
+
+[node name="Gameplay" parent="." instance=ExtResource("1_ra5s0")]
+limit_max = 25
+
+[node name="UI" parent="." instance=ExtResource("2_ckbfm")]
+
+[node name="Entities" type="Node" parent="."]
+
+[node name="Player" parent="Entities" instance=ExtResource("3_fhxem")]
+position = Vector2(78, 178)
+
+[node name="FinishArea" parent="Entities" instance=ExtResource("4_iojfa")]
+position = Vector2(1106, 180)
+
+[node name="Obstacles" type="Node" parent="."]
