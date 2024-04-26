@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8735bn5u2ixx"]
+
+[ext_resource type="Script" path="res://ui/ui.gd" id="1_rgjyd"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_rgjyd")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ProgressBar" type="ProgressBar" parent="Control"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 0
+offset_right = 4.0
+offset_bottom = 27.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 80.0
+offset_right = 22.0
+offset_bottom = 88.0
+text = "restart"
