@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://clla0oaww3cdb"]
+
+[ext_resource type="Script" path="res://entities/Player/player.gd" id="1_clo61"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yv55g"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w6o1n"]
+
+[node name="Player" type="RigidBody2D"]
+position = Vector2(253, 125)
+gravity_scale = 2.0
+script = ExtResource("1_clo61")
+
+[node name="GrabArea" type="Area2D" parent="."]
+
+[node name="CollisionGrab" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_yv55g")
+debug_color = Color(0.591583, 0.537885, 0.287537, 0.42)
+
+[node name="CollisionPlayer" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_w6o1n")
+debug_color = Color(1, 1, 1, 0.42)
