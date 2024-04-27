@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3iuvyqs14opg"]
+
+[ext_resource type="PackedScene" uid="uid://clla0oaww3cdb" path="res://entities/Player/player.tscn" id="1_2cc08"]
+[ext_resource type="Script" path="res://tests/TestPath.gd" id="1_8yi3s"]
+
+[sub_resource type="Curve2D" id="Curve2D_qs6br"]
+bake_interval = 125.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 469, 105, 107.756, -79.6948, -107.756, 79.6948, 262, 379, -84.1847, -30.3065, 84.1847, 30.3065, 153, 692, -60.6129, 86.4296, 60.6129, -86.4296, 695, 564, 0, 0, 0, 0, 762, 284)
+}
+point_count = 5
+
+[node name="TestPath" type="Node2D"]
+script = ExtResource("1_8yi3s")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_qs6br")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(469, 105)
+rotation = 2.21779
+rotates = false
+cubic_interp = false
+loop = false
+
+[node name="Player" parent="." instance=ExtResource("1_2cc08")]
+position = Vector2(863, 119)
+rotation = 2.21779
