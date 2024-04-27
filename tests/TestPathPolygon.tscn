@@ -7,7 +7,15 @@
 script = ExtResource("1_v6176")
 
 [node name="Player" parent="." instance=ExtResource("1_n31kc")]
-position = Vector2(245, 117)
+position = Vector2(634, 573)
+linear_velocity = Vector2(500, -1000)
 
-[node name="Polygon2D" type="Polygon2D" parent="."]
-polygon = PackedVector2Array(125, 284, 533, 433, 797, 473, 782, 494, 533, 454, 109, 294)
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2(334, 269)
+points = PackedVector2Array(-247, 163, 630, 128)
+
+[node name="Marker2D" type="Marker2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="Marker2D"]
+color = Color(1, 0, 1, 1)
+polygon = PackedVector2Array(0, -3, 3, 0, 0, 3, -3, 0)
