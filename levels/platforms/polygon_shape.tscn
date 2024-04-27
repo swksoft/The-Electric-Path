@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://65po333rb3ey"]
+
+[ext_resource type="Script" path="res://levels/platforms/polygon_shape.gd" id="1_83cci"]
+
+[sub_resource type="Curve2D" id="Curve2D_wtcnw"]
+bake_interval = 75.0
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -2, 167, -261.626, 8.32445, 261.626, -8.32445, 300, 536, 0, 0, 0, 0, 599, 450, 0, 0, 0, 0, 690, 617, 0, 0, 0, 0, -76, 737, 0, 0, 0, 0, -27, 461)
+}
+point_count = 6
+
+[node name="ShapeObstacle" type="StaticBody2D"]
+script = ExtResource("1_83cci")
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+build_mode = 1
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_wtcnw")
