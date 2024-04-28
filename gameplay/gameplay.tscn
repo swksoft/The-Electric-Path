@@ -10,8 +10,6 @@ cable_texture = ExtResource("2_7lkqy")
 
 [node name="Lines" type="Node2D" parent="."]
 
-[node name="Collisions" type="Node2D" parent="."]
-
-[node name="Paths" type="Node2D" parent="."]
+[node name="Markers" type="Node2D" parent="."]
 
 [connection signal="done_line" from="." to="." method="_on_done_line"]
