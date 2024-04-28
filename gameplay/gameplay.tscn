@@ -1,12 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://bynwpxyuxjbqb"]
 
 [ext_resource type="Script" path="res://gameplay/gameplay.gd" id="1_axhfs"]
-[ext_resource type="Texture2D" uid="uid://dumqehc4w3d05" path="res://icon.svg" id="2_7lkqy"]
+[ext_resource type="Texture2D" uid="uid://cx6j868dlhn0k" path="res://assets/sprites/cable.png" id="2_c82ar"]
 
 [node name="Gameplay" type="Node2D"]
 process_mode = 3
 script = ExtResource("1_axhfs")
-cable_texture = ExtResource("2_7lkqy")
+cable_texture = ExtResource("2_c82ar")
 
 [node name="Lines" type="Node2D" parent="."]
 

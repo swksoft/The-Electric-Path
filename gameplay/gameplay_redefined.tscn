@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://le1axlhjs4pj"]
+
+[ext_resource type="Script" path="res://gameplay/gameplay_redefined.gd" id="1_71r67"]
+[ext_resource type="Texture2D" uid="uid://cx6j868dlhn0k" path="res://assets/sprites/cable.png" id="2_21s1h"]
+
+[node name="GameplayRedefined" type="Node2D"]
+script = ExtResource("1_71r67")
+cable_texture = ExtResource("2_21s1h")
+
+[node name="CloseMarker" type="Marker2D" parent="."]

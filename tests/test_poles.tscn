@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://o5jchfr2wjet"]
+
+[ext_resource type="Script" path="res://tests/test_poles.gd" id="1_eovof"]
+[ext_resource type="Texture2D" uid="uid://cx6j868dlhn0k" path="res://assets/sprites/cable.png" id="1_wyweu"]
+
+[node name="test_poles" type="Node2D"]
+script = ExtResource("1_eovof")
+
+[node name="Line2D" type="Line2D" parent="."]
+z_index = 1
+points = PackedVector2Array(80, 190, 325, 322)
+texture = ExtResource("1_wyweu")
+texture_mode = 1

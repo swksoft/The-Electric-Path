@@ -79,15 +79,23 @@ func _process(delta):
 	if markers.get_children().size() == 0 or get_node_or_null(player_path) == null or lines_children.size() == 0: return
 	else:
 		print(markers.get_children().size())
-		for i in markers.get_children().size():	
+		for i in markers.get_children().size():
 			var res = Geometry2D.get_closest_point_to_segment(
 					player.global_position,
-					lines_children[i].to_global(lines_children[i].points[0]), lines_children[i].to_global(lines_children[i].points[1]), 
+					lines_children[i].to_global(lines_children[i].points[0]), lines_children[i].to_global(lines_children[i].points[-1]), 
 				)
 				
 			var dis = player.global_position.distance_to(res)
 			
 			markers.get_child(i).global_position = res
+			
+			# IF PLAYER NEAR POLYGON
+			player.is_grabing = dis <= 20 and player.global_position and !(marker_line.global_position == lines_children[i].to_global(lines_children[i].points[1]) or marker_line.global_position == lines_children[i].to_global(lines_children[i].points[0]))
+			#if dis <= 20 and player.global_position and !(marker_line.global_position == lines_children[i].to_global(lines_children[i].points[1]) or marker_line.global_position == lines_children[i].to_global(lines_children[i].points[0])):
+			#	#player.global_position = marker_line.position
+			#	player.is_grabing = true
+			#	pass
+			
 
 func _on_done_line():
 	var sprite_debug = Sprite2D.new()

@@ -3,26 +3,20 @@ extends RigidBody2D
 const MASS = 1
 const GRAVITY = 1
 
-@export var radius: float = 12.0
+@export var radius: float = 10.0
 
-var grab := false
 var grab_position : Vector2
 var stop_movement = false
+var is_grabing = false
 
+@onready var polygon_2d = $Polygon2D
 
-func _integrate_forces(state):
-	if grab:
-		pass
-		#print(linear_velocity)
-		#state.transform = Transform2D(0.0, grab_position)
-		#state.set_transform(Transform2D(0.0, grab_position))
+func _integrate_forces(_state):
+	pass
 
 func _ready():
 	self.mass = MASS
 	self.gravity_scale = GRAVITY
-	self.freeze = stop_movement
-	
-	#radius *= randf_range(0.5, 1.75)
 	draw_circle_polygon(32, radius)
 
 func draw_circle_polygon(points_nb: int, rad: float) -> void:
@@ -36,6 +30,10 @@ func draw_circle_polygon(points_nb: int, rad: float) -> void:
 
 #func _integrate_forces(state):
 	#state.set_transform()
+
+func _process(delta):
+	print(is_grabing)
+	polygon_2d.visible = !is_grabing
 
 func _on_grab_area_area_entered(area):
 	print(area, " detected")

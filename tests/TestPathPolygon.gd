@@ -15,9 +15,11 @@ func _ready():
 	prints(segment_start, segment_finish)
 
 func _physics_process(delta):
-	print(player.linear_velocity)
+	#print(player.linear_velocity)
 	
 	if result.global_position == segment_finish or result.global_position == segment_start:
+		grab = false
+		player.is_grabing = grab
 		return
 	
 	var res = Geometry2D.get_closest_point_to_segment(
@@ -29,7 +31,11 @@ func _physics_process(delta):
 	
 	result.global_position = res
 	
-	if dis <= 20 and player.global_position != line.points[0]:
+	if dis <= 20:
 		grab = true
+		player.is_grabing = grab
 		player.global_position = result.position
+	else:
+		grab = false
+		
 	

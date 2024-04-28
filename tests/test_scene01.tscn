@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://deov56444v8la"]
+[gd_scene load_steps=7 format=3 uid="uid://deov56444v8la"]
 
+[ext_resource type="Script" path="res://tests/test_scene01.gd" id="1_d0ghx"]
 [ext_resource type="PackedScene" uid="uid://bynwpxyuxjbqb" path="res://gameplay/gameplay.tscn" id="1_ra5s0"]
 [ext_resource type="PackedScene" uid="uid://b8735bn5u2ixx" path="res://ui/ui.tscn" id="2_ckbfm"]
 [ext_resource type="PackedScene" uid="uid://clla0oaww3cdb" path="res://entities/Player/player.tscn" id="3_fhxem"]
@@ -7,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://65po333rb3ey" path="res://levels/platforms/polygon_shape.tscn" id="5_lv16v"]
 
 [node name="TestScene01" type="Node2D"]
+script = ExtResource("1_d0ghx")
 
 [node name="Gameplay" parent="." instance=ExtResource("1_ra5s0")]
 limit_max = 25
@@ -16,7 +18,7 @@ limit_max = 25
 [node name="Entities" type="Node" parent="."]
 
 [node name="Player" parent="Entities" instance=ExtResource("3_fhxem")]
-position = Vector2(78, 178)
+position = Vector2(19, 53)
 inertia = 10.0
 
 [node name="FinishArea" parent="Entities" instance=ExtResource("4_iojfa")]
@@ -25,3 +27,4 @@ position = Vector2(1106, 180)
 [node name="Obstacles" type="Node" parent="."]
 
 [node name="ShapeObstacle" parent="Obstacles" instance=ExtResource("5_lv16v")]
+collision_mask = 0
