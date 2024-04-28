@@ -7,9 +7,9 @@ radius = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w6o1n"]
 
-[node name="Player" type="RigidBody2D"]
-position = Vector2(253, 125)
-gravity_scale = 2.0
+[node name="Player" type="RigidBody2D" groups=["player"]]
+mass = 0.5
+gravity_scale = 1.5
 script = ExtResource("1_clo61")
 
 [node name="GrabArea" type="Area2D" parent="."]
@@ -20,4 +20,10 @@ debug_color = Color(0.591583, 0.537885, 0.287537, 0.42)
 
 [node name="CollisionPlayer" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_w6o1n")
-debug_color = Color(1, 1, 1, 0.42)
+debug_color = Color(0, 1, 0, 0.419608)
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PackedVector2Array(0, 10, 10, 0, 0, -10, -10, 0)
+
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="body_entered" from="GrabArea" to="." method="_on_grab_area_body_entered"]
