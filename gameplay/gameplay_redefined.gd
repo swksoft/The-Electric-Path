@@ -20,6 +20,7 @@ var pole_line_start = null
 var pole_line_finish = null
 
 @onready var close_marker = $CloseMarker
+@onready var player = get_node(player_path)
 
 func _ready():
 	set_process_input(true)
@@ -76,7 +77,6 @@ func _input(event):
 		else:
 			if event.button_index == MOUSE_BUTTON_LEFT and drawing_line_preview != null:
 				var end_position = event.position
-				var player = player_path
 				
 				pole_line_start = Line2D.new()
 				pole_line_finish = Line2D.new()
@@ -86,9 +86,6 @@ func _input(event):
 				drawing_line_preview = null
 				
 				current_line = drawing_line_final
-				
-				var closest_point = get_closest_point(player.global_position, current_line.to_local(current_line.points[0]), current_line.to_local(current_line.points[-1]))
-				close_marker.global_position = closest_point
 				
 				if drawing_line_final.points.size() > 1:
 					drawing_line_final.remove_point(1)
@@ -116,6 +113,12 @@ func _process(delta):
 
 		var mouse_position = get_local_mouse_position()
 		drawing_line_preview.add_point(mouse_position)
-
-	# 
+	
+	if current_line != null:
+		var closest_point = get_closest_point(player.position, current_line.points[0], current_line.points[-1])
+		close_marker.position = closest_point
+		player.closest_point = closest_point
+		player.marker_line = close_marker
+		
+		
 	

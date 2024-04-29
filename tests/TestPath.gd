@@ -15,9 +15,6 @@ func _physics_process(delta):
 		path_follow.set_progress(path_follow.get_progress() + speed * delta)
 		player.global_position = path_follow.position
 		recorrido += abs(player.global_position)
-		#print(player.global_position)
-		#print(player)
-		#print(recorrido)
 		var current_point = path.curve.get_baked_points()
 	else:
 		player.gravity_scale = 1.5

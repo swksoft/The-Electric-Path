@@ -8,3 +8,8 @@ script = ExtResource("1_71r67")
 cable_texture = ExtResource("2_21s1h")
 
 [node name="CloseMarker" type="Marker2D" parent="."]
+z_index = 5
+
+[node name="PolygonDebug" type="Polygon2D" parent="CloseMarker"]
+color = Color(0.65011, 0, 0.260243, 1)
+polygon = PackedVector2Array(0, -8, -8, 0, 0, 8, 8, 0)
