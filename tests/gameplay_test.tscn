@@ -3,17 +3,18 @@
 [ext_resource type="Script" path="res://tests/gameplay_test.gd" id="1_xt021"]
 [ext_resource type="PackedScene" uid="uid://clla0oaww3cdb" path="res://entities/Player/player.tscn" id="2_clwe5"]
 [ext_resource type="PackedScene" uid="uid://le1axlhjs4pj" path="res://gameplay/gameplay_redefined.tscn" id="3_41n0t"]
-[ext_resource type="PackedScene" uid="uid://b8735bn5u2ixx" path="res://ui/ui.tscn" id="3_gl6qy"]
+[ext_resource type="PackedScene" uid="uid://b8735bn5u2ixx" path="res://ui/ui.tscn" id="4_rktt8"]
 
 [node name="GameplayTest" type="Node2D"]
 script = ExtResource("1_xt021")
 
 [node name="GameplayRedefined" parent="." instance=ExtResource("3_41n0t")]
+process_mode = 3
 player_path = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("2_clwe5")]
 position = Vector2(480, 170)
-gravity_scale = 0.1
+gravity_scale = 1.0
 cable_path = NodePath("../GameplayRedefined")
 
-[node name="UI" parent="." instance=ExtResource("3_gl6qy")]
+[node name="UI" parent="." instance=ExtResource("4_rktt8")]
