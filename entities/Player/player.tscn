@@ -7,6 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://wf2cvjlx7l3b" path="res://assets/sprites/player_idle4.png" id="5_7rdtx"]
 [ext_resource type="Texture2D" uid="uid://pa0jmjxllojn" path="res://assets/sprites/player_idle5.png" id="6_dafdn"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_yv55g"]
+radius = 20.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w6o1n"]
+
 [sub_resource type="Gradient" id="Gradient_62fx7"]
 colors = PackedColorArray(1, 1, 0.333333, 1, 1, 1, 1, 1)
 
@@ -35,10 +40,20 @@ turbulence_influence_max = 0.245
 turbulence_initial_displacement_min = 15.5
 turbulence_initial_displacement_max = 15.5
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_yv55g"]
-radius = 20.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_w6o1n"]
+[sub_resource type="Animation" id="Animation_hn5ro"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Polygon2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_s5juf")]
+}
 
 [sub_resource type="Animation" id="Animation_q5w6g"]
 resource_name = "idle"
@@ -57,21 +72,6 @@ tracks/0/keys = {
 "values": [ExtResource("2_tn870"), ExtResource("2_s5juf"), ExtResource("4_jfn4g"), ExtResource("5_7rdtx"), ExtResource("6_dafdn")]
 }
 
-[sub_resource type="Animation" id="Animation_hn5ro"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Polygon2D:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [ExtResource("2_s5juf")]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_e48xb"]
 _data = {
 "RESET": SubResource("Animation_hn5ro"),
@@ -82,14 +82,6 @@ _data = {
 mass = 0.5
 gravity_scale = 1.5
 script = ExtResource("1_clo61")
-
-[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_r42i1")
-lifetime = 0.1
-explosiveness = 0.5
-randomness = 0.43
-fixed_fps = 15
 
 [node name="GrabArea" type="Area2D" parent="."]
 
@@ -108,11 +100,25 @@ texture_offset = Vector2(10, 10)
 polygon = PackedVector2Array(-10, -10, 10, -10, 10, 10, -10, 10)
 uv = PackedVector2Array(0, 0, 20, 0, 20, 20, 0, 20)
 
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Polygon2D"]
+z_as_relative = false
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_r42i1")
+lifetime = 0.1
+explosiveness = 0.5
+randomness = 0.43
+fixed_fps = 15
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_e48xb")
 }
 autoplay = "idle"
 
+[node name="TimerGrab" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
 [connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
 [connection signal="body_entered" from="GrabArea" to="." method="_on_grab_area_body_entered"]
+[connection signal="timeout" from="TimerGrab" to="." method="_on_timer_grab_timeout"]

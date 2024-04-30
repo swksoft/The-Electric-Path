@@ -15,8 +15,10 @@ var stop_movement = false
 var is_grabing = false
 var closest_point = null
 var marker_line = null
+var current_velocity := Vector2.ZERO
 
 @onready var polygon_2d = $Polygon2D
+@onready var timer_grab = $TimerGrab
 
 func _ready():
 	#self.mass = MASS
@@ -32,32 +34,36 @@ func draw_circle_polygon(points_nb: int, rad: float) -> void:
 	
 	$Polygon2D.polygon = points
 
-func attach(state):
-	if closest_point != null:
-		var dis = global_position.distance_to(closest_point)
-		
-		if dis < 20:
-			var current_velocity = linear_velocity
-			polygon_2d.global_position = marker_line.position
-			
-			
-
 func _integrate_forces(state):
-	#state.apply_central_force()
-	
-	attach(state)
+	pass
 
 func _physics_process(delta):
-	polygon_2d.visible = !is_grabing
-	
-	if closest_point != null and marker_line != null:
-		var dis = global_position.distance_to(closest_point)
+	if closest_point == null or marker_line == null or cable_path == null:
+		return
 		
-		if dis < 200:
-			pass
+	var current_cable = get_node(cable_path)
+
+	if !is_grabing:
+		polygon_2d.self_modulate = Color("ffffffff")
+		var dis = global_position.distance_to(closest_point)
+		if dis < 20:
+			current_velocity = linear_velocity
+			is_grabing = true
+	else:
+		if marker_line.global_position == current_cable.current_line.points[0] or marker_line.global_position == current_cable.current_line.points[-1]:
+			linear_velocity = current_velocity
+			is_grabing = false
+		
+		timer_grab.start()
+		
+		polygon_2d.self_modulate = Color("ffffff00")
+		polygon_2d.global_position = marker_line.position
 
 func _on_grab_area_area_entered(area):
 	print(area, " detected")
 
 func _on_grab_area_body_entered(body):
 	print(body, " detected")
+
+func _on_timer_grab_timeout():
+	is_grabing = false
