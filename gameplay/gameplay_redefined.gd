@@ -1,8 +1,13 @@
 extends Node2D
 
+signal line_out
+
 @export var player_path : NodePath
 
 # UNIMPORTANT SHIT
+@export_category("Line Settings")
+@export var line_limit : float = 300
+@export var line_max : int = 3
 @export_category("Line Stats")
 @export var limit_max := 100
 @export var limit_depletion_rate := 10
@@ -18,11 +23,14 @@ var drawing_line_final = null
 var current_line = null
 var pole_line_start = null
 var pole_line_finish = null
+var lines_left : int
+var line_available : bool
 
 @onready var close_marker = $CloseMarker
 @onready var player = get_node(player_path)
 
 func _ready():
+	lines_left = line_max
 	set_process_input(true)
 
 func post_config(line: Line2D):
@@ -64,7 +72,7 @@ func poste_posicion():
 func _input(event):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
-			if event.button_index == MOUSE_BUTTON_LEFT:
+			if event.button_index == MOUSE_BUTTON_LEFT and lines_left > 0:
 				var end_position = event.position
 				
 				start_position = event.position
@@ -75,6 +83,11 @@ func _input(event):
 				
 				drawing_line_preview.add_point(start_position)
 		else:
+			if lines_left <= 0 or !line_available:
+				if lines_left > 0:
+					get_child(-1).queue_free()
+				return
+			
 			if event.button_index == MOUSE_BUTTON_LEFT and drawing_line_preview != null:
 				var end_position = event.position
 				
@@ -95,6 +108,9 @@ func _input(event):
 				for i in get_children():
 					if i != current_line and i is Line2D:
 						i.modulate = Color(0.5, 0.5, 0.5, 0.5)
+				
+				lines_left -= 1
+				emit_signal("line_out")
 
 func _process(delta):
 	# LINE PREVIEW:
@@ -112,13 +128,20 @@ func _process(delta):
 		drawing_line_preview.add_point(start_position)
 
 		var mouse_position = get_local_mouse_position()
-		drawing_line_preview.add_point(mouse_position)
+		
+		print(mouse_position.distance_to(drawing_line_preview.points[-1]))
+		
+		if mouse_position.distance_to(drawing_line_preview.points[-1]) < 300:
+			drawing_line_preview.add_point(mouse_position)
+			line_available = true 
+		else:
+			line_available = false
+			drawing_line_preview.add_point(mouse_position)
+			drawing_line_preview.default_color = Color("ffffff6e")
 	
 	if current_line != null:
 		var closest_point = get_closest_point(player.position, current_line.points[0], current_line.points[-1])
 		close_marker.position = closest_point
 		player.closest_point = closest_point
 		player.marker_line = close_marker
-		
-		
-	
+

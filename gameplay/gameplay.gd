@@ -92,7 +92,6 @@ func _process(delta):
 			# IF PLAYER NEAR POLYGON
 			player.is_grabing = dis <= 20 and player.global_position and !(marker_line.global_position == lines_children[i].to_global(lines_children[i].points[1]) or marker_line.global_position == lines_children[i].to_global(lines_children[i].points[0]))
 			if dis <= 20 and player.global_position and !(marker_line.global_position == lines_children[i].to_global(lines_children[i].points[1]) or marker_line.global_position == lines_children[i].to_global(lines_children[i].points[0])):
-				#player.global_position = marker_line.position
 				player.is_grabing = true
 				pass
 			
@@ -109,7 +108,5 @@ func _on_done_line():
 		marker_line.add_child(sprite_debug)
 		
 		markers.add_child(marker_line)
-		#for i in current_line.points.size() - 1:
-		#	return
 	
 		current_line.add_to_group("LineGroup")
