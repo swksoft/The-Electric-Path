@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://doue6wk2b67w"]
+
+[ext_resource type="Script" path="res://entities/Player/player_definitive.gd" id="1_umv1d"]
+[ext_resource type="Script" path="res://entities/Player/RigidBody.gd" id="2_fo3q8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_adw3y"]
+
+[node name="PlayerDefinitive" type="Node2D"]
+script = ExtResource("1_umv1d")
+
+[node name="MarkerPlayer" type="Marker2D" parent="."]
+
+[node name="Polygon2D" type="Polygon2D" parent="MarkerPlayer"]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+metadata/_edit_lock_ = true
+metadata/_edit_group_ = true
+
+[node name="RigidBody" type="RigidBody2D" parent="."]
+script = ExtResource("2_fo3q8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody"]
+shape = SubResource("CircleShape2D_adw3y")

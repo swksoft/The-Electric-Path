@@ -30,13 +30,14 @@ func draw_circle_polygon(points_nb: int, rad: float) -> void:
 		var point = deg_to_rad(i * 360.0 / points_nb - 90)
 		points.push_back(Vector2.ZERO + Vector2(cos(point), sin(point)) * rad)
 	
-	$Polygon2D.polygon = points
+	#$Polygon2D.polygon = points
 
 func _integrate_forces(state):
 	var len = min(MAX_SPEED, state.linear_velocity.length())
 	state.linear_velocity = state.linear_velocity.normalized() * len
 
 func _physics_process(delta):
+	print(current_line)
 	#print(linear_velocity)
 	#print(current_state)
 	match current_state:
@@ -82,7 +83,8 @@ func is_near_line(line_position):
 	return global_position.distance_to(line_position) < 20
 
 func attach():
-	var condition = poly.global_position != current_cable.current_line.points[0] or poly.global_position != current_cable.current_line.points[-1]
+	var condition = round(poly.global_position) != round(current_cable.current_line.points[0]) or round(poly.global_position) != round(current_cable.current_line.points[-1])
+	
 	#print(condition)
 	if condition:
 		print(poly.global_position)
