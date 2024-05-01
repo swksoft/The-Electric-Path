@@ -1,4 +1,4 @@
-extends Node2D
+extends Marker2D
 
 const MAX_SPEED = 1000
 
@@ -13,19 +13,18 @@ var current_state := PlayerState.OUTSIDE_LINE
 
 var new_rigid_body = null
 var current_line = null
+var current_speed : Vector2
 var current_line_position = Vector2.ZERO
 var time_on_current_line := 0.0
 var max_time_on_current_line := 2.0
 
-@onready var poly = $MarkerPlayer/Polygon2D
-@onready var rigid = $RigidBody
+@onready var poly = Polygon2D
 @onready var current_cable = get_node(current_cable_path)
-@onready var marker_player = $MarkerPlayer
 
 func _ready():
 	new_rigid_body = RigidBody2D.new()
-	new_rigid_body.global_position = marker_player.global_position
-	add_child(new_rigid_body)
+	new_rigid_body.global_position = position
+	get_parent().add_child.call_deferred(new_rigid_body)
 	draw_circle_polygon(32, radius)
 	
 func draw_circle_polygon(points_nb: int, rad: float) -> void:
@@ -36,68 +35,93 @@ func draw_circle_polygon(points_nb: int, rad: float) -> void:
 		points.push_back(Vector2.ZERO + Vector2(cos(point), sin(point)) * rad)
 
 func _physics_process(delta):
-	#print(current_state)
+	#var velocity_direction = (closest_point - node_position).normalized()
+	
 	match current_state:
 		PlayerState.OUTSIDE_LINE:
-			current_cable.rigid_body_position = new_rigid_body.global_position 
-			
+			# Check if RigidBody (follow)
 			if new_rigid_body != null:
-				current_line = null
-				marker_player.global_position = new_rigid_body.position
-			else:
-				marker_player.global_position = new_rigid_body.position
-			# Polygon affected by physics
-			#marker_player.global_position = rigid.global_position
+				global_position = new_rigid_body.position
 			
-			# Check if no lines
+			# Check if lines
 			if current_line == null:
 				return
-			# Search for lines
 			if is_near_line(current_line_position):
 				current_state = PlayerState.INSIDE_LINE
 			
+			#current_cable.rigid_body_position = new_rigid_body.global_position
+				
+			# Polygon affected by physics
+			#marker_player.global_position = rigid.global_position
+			
 		PlayerState.INSIDE_LINE:
 			# Save current speed
-			var currrent_speed = rigid.linear_velocity
+			current_speed = new_rigid_body.linear_velocity
+			
+			var condition1 = round(global_position) == round(current_cable.current_line.points[0])
+			var condition2 = round(global_position) == round(current_cable.current_line.points[-1])
 			
 			# Timer
 			start_timer(delta)
 			
-			# Posicion = MarkerLine
-
-			var condition1 = round(marker_player.global_position) == round(current_cable.current_line.points[0])
-			var condition2 = round(marker_player.global_position) == round(current_cable.current_line.points[-1])
-			
-			if !condition1 and !condition2:
-				marker_player.global_position = current_line_position
+			if time_out():
+				release()
 			else:
-				new_rigid_body = RigidBody2D.new()
-				new_rigid_body.global_position = marker_player.global_position
+				if !condition1 and !condition2:
+					# SIGUE CAMINO DEL CABLE
+					global_position = current_line_position
+				else:
+					# SE SUELTA
+					release()
+					
+					
+					#current_cable.is_used = true
+					
+					#new_rigid_body = RigidBody2D.new()
+					#new_rigid_body.global_position = position
+					
+					#get_parent().add_child.call_deferred(new_rigid_body)
+					
+					#global_position = global_position
+					
+					
+					#current_state = PlayerState.OUTSIDE_LINE
+					
+					#time_on_current_line = 0
 				
-				add_child(new_rigid_body)
-				
-				rigid.global_position = marker_player.global_position
-				rigid.linear_velocity = currrent_speed
-				
-				current_state = PlayerState.OUTSIDE_LINE
-			
-			# TODO: Add physics
+				# TODO: Add physics
 
 func is_near_line(line_position):
-	return marker_player.global_position.distance_to(line_position) < 20
+	return global_position.distance_to(line_position) < 20
 			
 func start_timer(delta):
-	time_on_current_line += delta
-	
+	# ???
 	if current_line == null:
 		PlayerState.OUTSIDE_LINE
-	# TIME OUT
-	if time_on_current_line >= max_time_on_current_line:
-		current_line = null
-		current_line_position = Vector2.ZERO
-		time_on_current_line = 0
 		
-		current_state = PlayerState.OUTSIDE_LINE
+	time_on_current_line += delta
+
+func time_out():
+	if time_on_current_line >= max_time_on_current_line:
+		return true
+		time_out()
+
+func release():
+	time_on_current_line = 0
+	
+	# Delete previus RigidBody
+	# TODO: lo de arriba
+	
+	current_line = null
+	current_state = PlayerState.OUTSIDE_LINE
+	current_cable.is_used = true
+
+	create_rigid_body()
+
+func create_rigid_body():
+	new_rigid_body = RigidBody2D.new()
+	new_rigid_body.global_position = position
+	get_parent().add_child.call_deferred(new_rigid_body)
 	
 func _on_gameplay_redefined_new_line():
 	current_state = PlayerState.OUTSIDE_LINE
