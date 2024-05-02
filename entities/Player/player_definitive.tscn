@@ -1,9 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://doue6wk2b67w"]
+[gd_scene load_steps=3 format=3 uid="uid://doue6wk2b67w"]
 
 [ext_resource type="Script" path="res://entities/Player/player_definitive.gd" id="1_umv1d"]
+[ext_resource type="PackedScene" uid="uid://dhcljm60wpyl6" path="res://entities/Player/player_collision.tscn" id="2_g5v82"]
 
 [node name="MarkerPlayer" type="Marker2D"]
 script = ExtResource("1_umv1d")
+new_rigid_body_scene = ExtResource("2_g5v82")
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -11,3 +13,8 @@ metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
 
 [node name="Line2DDebug" type="Line2D" parent="."]
+visible = false
+
+[node name="LinePath" type="Line2D" parent="."]
+visible = false
+z_index = 3

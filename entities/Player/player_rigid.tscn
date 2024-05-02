@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b74fifjf1wovq"]
+
+[ext_resource type="Script" path="res://entities/Player/player_rigid.gd" id="1_pajs5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rnl3f"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+script = ExtResource("1_pajs5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rnl3f")
