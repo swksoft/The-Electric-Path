@@ -9,3 +9,5 @@ script = ExtResource("1_umv1d")
 polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 metadata/_edit_lock_ = true
 metadata/_edit_group_ = true
+
+[node name="Line2DDebug" type="Line2D" parent="."]
